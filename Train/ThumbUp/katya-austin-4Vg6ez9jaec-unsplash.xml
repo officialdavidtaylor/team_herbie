@@ -1,0 +1,26 @@
+<annotation>
+	<folder>JPEG</folder>
+	<filename>katya-austin-4Vg6ez9jaec-unsplash.jpg</filename>
+	<path>C:\Users\offic\OneDrive\CloudFiles\College\Coursework\2019 - Fall\EECS 159A\Machine Learning\temp\drive-download-20191109T041328Z-001\downsized\JPEG\katya-austin-4Vg6ez9jaec-unsplash.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>800</width>
+		<height>533</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>Thumbs Up</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>347</xmin>
+			<ymin>166</ymin>
+			<xmax>484</xmax>
+			<ymax>368</ymax>
+		</bndbox>
+	</object>
+</annotation>

@@ -1,0 +1,26 @@
+<annotation>
+	<folder>JPEG</folder>
+	<filename>IMG_0434.jpg</filename>
+	<path>C:\Users\offic\OneDrive\CloudFiles\College\Coursework\2019 - Fall\EECS 159A\Machine Learning\temp\drive-download-20191109T041328Z-001\downsized\JPEG\IMG_0434.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>450</width>
+		<height>600</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>Thumbs Up</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>79</xmin>
+			<ymin>299</ymin>
+			<xmax>203</xmax>
+			<ymax>515</ymax>
+		</bndbox>
+	</object>
+</annotation>
