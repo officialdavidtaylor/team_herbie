@@ -24,7 +24,6 @@ def setLED(mode):
         led[num] = (20*(1-state), 20*state, 0) # set all LEDs to either RED (255, 0, 0, 100) or GREEN (0, 255, 0, 100) based on Mode enum input
     led.show()
 
-
 #---Code to Test---
 
 # pixel = neopixel.NeoPixel(GPIO.D12, 1, pixel_order=neopixel.RGBW) # Need to verify arg1 datatype - attempting to control LED ring with GPIO pin 12
