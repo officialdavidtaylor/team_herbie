@@ -1,10 +1,21 @@
-#This file contains the LED object, and is responsible for changing the LED between color states
+#------------------------------------------------------------------------------
+# Filename:     LED.py
+# Author(s):    David Taylor
+# ShortDesc:    This code controls the NeoPixel
+#
+# Usage:
+#
+# Changelog
+# Version   Date        Delta
+# v0.1      2019-11-22  First test of the GPIO code (for Raspberry Pi, should port to Jetson Nano just fine)
+#
+#------------------------------------------------------------------------------
 
 #from enum import Enum
 from time import sleep # for delays :)
 
-#import Jetson.GPIO # The GPIO library for the Jetson Nano
-import RPi.GPIO as GPIO
+import Jetson.GPIO # The GPIO library for the Jetson Nano
+#import RPi.GPIO as GPIO
 import board # Adafruit library per https://circuitpython.readthedocs.io/projects/neopixel/en/latest/
 import neopixel # library for controlling the LED ring
 
