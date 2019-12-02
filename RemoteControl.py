@@ -3,7 +3,7 @@
 # Author(s):    David Taylor
 # ShortDesc:    This code enables manual remote control of the robot via a PlayStation DualShock4 bluetooth controller.
 #
-# Usage:
+# Usage:        This code is to be used for testing, and eventually merged into a single file.
 #
 # Changelog
 # Version   Date        Delta
@@ -16,9 +16,7 @@
 # - Future low-level stuff  |   https://core-electronics.com.au/tutorials/using-usb-and-bluetooth-controllers-with-python.html
 #------------------------------------------------------------------------------
 
-from time import sleep # for delays :)
-
-#import Jetson.GPIO as GPIO # The GPIO library for the Jetson Nano
+import Jetson.GPIO as GPIO # The GPIO library for the Jetson Nano
 #import RPi.GPIO as GPIO # For Raspberry Pi Testing
 
 import pygame
@@ -66,3 +64,4 @@ try:
 except KeyboardInterrupt:
     print("EXITING NOW")
     controller.quit()
+    GPIO.cleanup()  # to be used when GPIO is active
