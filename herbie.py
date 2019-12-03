@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-# Filename:     RemoteControl.py
+# Filename:     herbie.py
 # Author(s):    David Taylor
 # ShortDesc:    This is the code behind our senior design robot
 #
