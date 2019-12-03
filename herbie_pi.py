@@ -27,9 +27,10 @@ import pygame
 # LED control
 import board    # Adafruit library per https://circuitpython.readthedocs.io/projects/neopixel/en/latest/
 import neopixel # library for controlling the LED ring
+import rpi_dc_lib
 
 from time import sleep
-from RpiMotorLib import rpi_dc_lib
+
 #-----</LIBRARIES>-----
 
 #-----<GLOBAL VARIABLES>-----
