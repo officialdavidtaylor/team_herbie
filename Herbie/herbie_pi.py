@@ -53,34 +53,34 @@ def motorone():
         input("press key to stop")
         print("motor stop\n")
         MotorOne.stop(0)
-        time.sleep(3)
+        sleep(3)
 
         print("2. motor forward ramp speed up 15 to 30 steps of 1")
         for i in range(15, 30):
             MotorOne.forward(i)
-            time.sleep(1)
+            sleep(1)
         MotorOne.stop(0)
         print("motor stoped\n")
-        time.sleep(3)
+        sleep(3)
 
         print("3. motor backward")
         MotorOne.backward(15)
         input("press key to stop")
         MotorOne.stop(0)
         print("motor stopped\n")
-        time.sleep(3)
+        sleep(3)
 
         print("4. motor backward ramp speed up up 15 to 30 steps of 1")
         for i in range(15, 30):
             MotorOne.backward(i)
-            time.sleep(1)
+            sleep(1)
         MotorOne.stop(0)
         print("motor stopped\n")
-        time.sleep(3)
+        sleep(3)
 
         print("5  brake check")
         MotorOne.forward(50)
-        time.sleep(3)
+        sleep(3)
         MotorOne.brake(0)
         print("motor brake\n")
 
