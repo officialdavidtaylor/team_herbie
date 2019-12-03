@@ -37,8 +37,8 @@ from time import sleep
 #-----<GLOBAL VARIABLES>-----
 LED_PIN = board.D12 # GPIO Pin #12
 
-MOTOR_A_PIN = board.D33
-MOTOR_B_PIN = board.D35
+# MOTOR_A_PIN = board.D33
+# MOTOR_B_PIN = board.D35
 #-----</GLOBAL VARIABLES>-----
 
 
