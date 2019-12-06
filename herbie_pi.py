@@ -86,7 +86,7 @@ class DC_Motor_Controller:
         self.driveMode = mode
 
     def cycleMode(self):
-        (self.driveMode = 0) if (self.driveMode) else (self.driveMode += 1)
+        (self.driveMode == 0) if (self.driveMode) else (self.driveMode += 1)
 
     def changeSpeed(self, rightStick, leftStick):
         """Input values of rightStick and leftStick between -100 and 100"""
