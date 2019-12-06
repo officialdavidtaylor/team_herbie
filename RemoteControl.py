@@ -16,8 +16,8 @@
 # - Future low-level stuff  |   https://core-electronics.com.au/tutorials/using-usb-and-bluetooth-controllers-with-python.html
 #------------------------------------------------------------------------------
 
-import Jetson.GPIO as GPIO # The GPIO library for the Jetson Nano
-#import RPi.GPIO as GPIO # For Raspberry Pi Testing
+#import Jetson.GPIO as GPIO # The GPIO library for the Jetson Nano
+import RPi.GPIO as GPIO # For Raspberry Pi Testing
 
 import pygame
 
@@ -59,7 +59,7 @@ try:
         events = pygame.event.get()
         for event in events:
             if event.type == pygame.JOYBUTTONDOWN:
-                print(controller.get_axis(5))
+                print(controller.get_axis(4))
 
 except KeyboardInterrupt:
     print("EXITING NOW")
