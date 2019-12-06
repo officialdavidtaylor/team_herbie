@@ -142,7 +142,7 @@ class Remote_Control:
 
 #-----<FUNCTIONS>-----
 
-def __main__:
+def __main__():
 
     # Initialize Neopixel ring
     #
