@@ -201,7 +201,7 @@ def __main__():
     #
 
     # Initialize motor controller objects
-    motors = DC_Motor_Controller(MOTOR_A, MOTOR_B, driveMode)
+    motors = DC_Motor_Controller(MOTOR_1A, MOTOR_1B, MOTOR_2A, MOTOR_2B, driveMode)
 
     # Initialize DualShock4 Controller Connection
     DS4 = Remote_Control()
@@ -210,16 +210,21 @@ def __main__():
     R_Y_AXIS_SCALE_VAL = 100    # Scale right stick Y-axis by 100 to match the changeSpeed method input range
     L_Y_AXIS_SCALE_VAL = 100    # Scale left stick Y-axis by 100 to match the changeSpeed method input range
 
+    try:
+        while True:
+            DS4.update()
+            if driveMode == 0:  # Intuitive Mode
+                motors.changeSpeed((DS4.R_X_Axis * R_X_AXIS_SCALE_VAL), (DS4.L_Y_Axis * L_Y_AXIS_SCALE_VAL))
+            if driveMode == 1:  # Tank Mode
+                motors.changeSpeed((DS4.R_Y_Axis * R_Y_AXIS_SCALE_VAL), (DS4.L_Y_Axis * L_Y_AXIS_SCALE_VAL))
+            if DS4.PS:
+                DS4.cycleMode()
+                sleep(0.25)     # Artificial debouncing just in case (don't want rapid mode changing)
 
-    while True:
-        DS4.update()
-        if driveMode == 0:  # Intuitive Mode
-            motors.changeSpeed((DS4.R_X_Axis * R_X_AXIS_SCALE_VAL), (DS4.L_Y_Axis * L_Y_AXIS_SCALE_VAL))
-        if driveMode == 1:  # Tank Mode
-            motors.changeSpeed((DS4.R_Y_Axis * R_Y_AXIS_SCALE_VAL), (DS4.L_Y_Axis * L_Y_AXIS_SCALE_VAL))
-        if DS4.PS:
-            DS4.cycleMode()
-            sleep(0.25)     # Artificial debouncing just in case (don't want rapid mode changing)
+    except KeyboardInterrupt:
+        print("EXITING NOW")
+        controller.quit()
+        GPIO.cleanup()  # to be used when GPIO is active
 
 #-----</FUNCTIONS>-----
 
