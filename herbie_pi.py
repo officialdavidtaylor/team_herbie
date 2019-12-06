@@ -81,12 +81,14 @@ class DC_Motor_Controller:
         if newSpeed > 0:
             self.bPWM.ChangeDutyCycle(0)
             self.aPWM.ChangeDutyCycle(newSpeed)
-        if newSpeed < 0:
-            self.aPWM.ChangeDutyCycle(0)
-            self.bPWM.ChangeDutyCycle(-newSpeed)    # Make positive
         else:
             self.aPWM.ChangeDutyCycle(0)
-            self.bPWM.ChangeDutyCycle(0)
+            self.bPWM.ChangeDutyCycle(-newSpeed)    # Make positive
+
+#           DECOMISSIONED - TOOK TOO LONG
+#        else:
+#            self.aPWM.ChangeDutyCycle(0)
+#            self.bPWM.ChangeDutyCycle(0)
 
 #class LED_Controller:
 #    """Utilizes the Adafruit Neopixel library to control the output of the Neopixel LED ring."""
@@ -126,6 +128,7 @@ class Remote_Control:
         self.controller = pygame.joystick.Joystick(0) # Connect to the controller (and hope that it is paired with the Pi)
         self.controller.init()   # Prepare to read data from controller
 
+#       DECOMISSIONED - TOOK TOO LONG
 #    def update(self):   # Only update the relavent buttons/axies
 #        pygame.event.get()
 #        self.L_Y_Axis = self.controller.get_axis(1)
