@@ -88,7 +88,7 @@ class DC_Motor_Controller:
             else:
                 aPWM.ChangeDutyCycle(0)
                 bPWM.ChangeDutyCycle(0)
-            speed = newSpeed
+            self.speed = newSpeed
 
 #class LED_Controller:
 #    """Utilizes the Adafruit Neopixel library to control the output of the Neopixel LED ring."""
@@ -130,10 +130,10 @@ class Remote_Control:
 
     def update(self):   # Only update the relavent buttons/axies
         pygame.event.get()
-        self.L_Y_Axis = controller.get_axis(1)
-        self.R_Y_Axis = controller.get_axis(4)
-        self.Ex = controller.get_button(0)
-        self.PS = controller.get_button(10)
+        self.L_Y_Axis = self.controller.get_axis(1)
+        self.R_Y_Axis = self.controller.get_axis(4)
+        self.Ex = self.controller.get_button(0)
+        self.PS = self.controller.get_button(10)
 
 #class Autonomous_Control:
 #   """NVIDIA Jetson Nano is used to provide motor control feedback based on realtime video processing"""
