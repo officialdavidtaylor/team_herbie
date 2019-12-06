@@ -77,7 +77,7 @@ class DC_Motor_Controller:
     def changeSpeed(newSpeed):
         """Input values between -100 and 100"""
 
-        if speed = newSpeed:
+        if speed == newSpeed:
             break
 
         if newSpeed > 0:
