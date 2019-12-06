@@ -69,8 +69,8 @@ class DC_Motor_Controller:
 
         GPIO.setup(int(argA), GPIO.OUT)  # Set pin as output
         GPIO.setup(int(argB), GPIO.OUT)  # "
-        self.aPWM = GPIO.PWM(argA, 40)   # Set PWM frewquency to 40hz
-        self.bPWM = GPIO.PWM(argB, 40)   # "
+        self.bPWM = GPIO.PWM(argB, 10)   # "
+        self.aPWM = GPIO.PWM(argA, 10)   # Set PWM frewquency to 40hz
 
         self.aPWM.start(self.speed)   # Activate PWM for pin A
         self.bPWM.start(self.speed)   # Activate PWM for pin B
