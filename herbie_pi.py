@@ -186,7 +186,7 @@ class Remote_Control:
         self.Ex = self.controller.get_button(0)
         self.PS = self.controller.get_button(10)
 
-#class Autonomous_Control:
+#class Autonomous_Control: # This will be built out in Winter
 #   """NVIDIA Jetson Nano is used to provide motor control feedback based on realtime video processing"""
 
 #-----</CLASSES>-----
