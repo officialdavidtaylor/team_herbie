@@ -66,6 +66,8 @@ class DC_Motor_Controller:
 
     speed = 0
 
+    intuitiveGain = 0.5
+
     # Pass the GPIO numbers for motor connections A and B
     def __init__(self, pinRA, pinRB, pinLA, pinLB, mode):
         GPIO.setwarnings(False)
@@ -98,13 +100,14 @@ class DC_Motor_Controller:
         """Input values of rightStick and leftStick between -100 and 100"""
 
         if driveMode == 0:  # Intuitive Mode
-            rSpeed = leftStick - (0.5 * rightStick)
-            rSpeed = 100 if rSpeed > 100 else
-            rSpeed = -100 if rSpeed < -100 else
+            rSpeed = leftStick - (intuitiveGain * rightStick)
+            lSpeed = leftStick + (intuitiveGain * rightStick)
 
-            lSpeed = leftStick + (0.5 * rightStick)
-            lSpeed = 100 if lSpeed > 100 else
-            lSpeed = -100 if lSpeed < -100 else
+            if rSpeed > 100: rSpeed = 100
+            if rSpeed < -100: rSpeed = -100
+
+            if lSpeed > 100: lSpeed = 100
+            if lSpeed < -100: lSpeed = -100
 
             if rSpeed > 0:
                 self.rbPWM.ChangeDutyCycle(0)
@@ -120,7 +123,7 @@ class DC_Motor_Controller:
                 self.laPWM.ChangeDutyCycle(0)
                 self.lbPWM.ChangeDutyCycle(-lSpeed)    # Make positive
 
-        #elif driveMode == 1:# Tank Mode
+        elif driveMode == 1:# Tank Mode
             if rightStick > 0:
                 self.rbPWM.ChangeDutyCycle(0)
                 self.raPWM.ChangeDutyCycle(rightStick)
