@@ -77,9 +77,7 @@ class DC_Motor_Controller:
     def changeSpeed(newSpeed):
         """Input values between -100 and 100"""
 
-        if speed == newSpeed:
-            break
-        else:
+        if speed != newSpeed:
             if newSpeed > 0:
                 bPWM.ChangeDutyCycle(0)
                 aPWM.ChangeDutyCycle(newSpeed)
