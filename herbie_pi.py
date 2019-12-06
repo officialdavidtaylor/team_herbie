@@ -75,7 +75,7 @@ class DC_Motor_Controller:
         self.aPWM.start(self.speed)   # Activate PWM for pin A
         self.bPWM.start(self.speed)   # Activate PWM for pin B
 
-    def changeSpeed(newSpeed):
+    def changeSpeed(self, newSpeed):
         """Input values between -100 and 100"""
 
         if newSpeed < 0:
