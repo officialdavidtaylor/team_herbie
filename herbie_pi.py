@@ -78,12 +78,12 @@ class DC_Motor_Controller:
     def changeSpeed(self, newSpeed):
         """Input values between -100 and 100"""
 
-        if newSpeed < 0:
-            self.aPWM.ChangeDutyCycle(0)
-            self.bPWM.ChangeDutyCycle(-newSpeed)    # Make positive
         if newSpeed > 0:
             self.bPWM.ChangeDutyCycle(0)
             self.aPWM.ChangeDutyCycle(newSpeed)
+        if newSpeed < 0:
+            self.aPWM.ChangeDutyCycle(0)
+            self.bPWM.ChangeDutyCycle(-newSpeed)    # Make positive
         else:
             self.aPWM.ChangeDutyCycle(0)
             self.bPWM.ChangeDutyCycle(0)
