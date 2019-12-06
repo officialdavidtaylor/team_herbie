@@ -160,8 +160,8 @@ def __main__():
 
     while True:
         DS4.update()
-        Rmotor.changeSpeed(int(DS4.R_Y_Axis) * R_Y_AXIS_SCALE_VAL)
         Lmotor.changeSpeed(int(DS4.L_Y_Axis) * L_Y_AXIS_SCALE_VAL)
+        Rmotor.changeSpeed(int(DS4.R_Y_Axis) * R_Y_AXIS_SCALE_VAL)
 
 
 #-----</FUNCTIONS>-----
