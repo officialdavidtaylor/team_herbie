@@ -101,8 +101,8 @@ class DC_Motor_Controller:
         """Input values of rightStick and leftStick between -100 and 100"""
 
         if self.driveMode == 0:  # Intuitive Mode
-            rSpeed = leftStick - (self.intuitiveGain * rightStick)
-            lSpeed = leftStick + (self.intuitiveGain * rightStick)
+            rSpeed = leftStick + (self.intuitiveGain * rightStick)
+            lSpeed = leftStick - (self.intuitiveGain * rightStick)
 
             if rSpeed > 100: rSpeed = 100
             if rSpeed < -100: rSpeed = -100
@@ -207,7 +207,7 @@ def __main__():
 
     # Initialize DualShock4 Controller Connection
     DS4 = Remote_Control()
-    R_X_AXIS_SCALE_VAL = -100   # Scale right stick X-axis by 100 to match the changeSpeed method input range
+    R_X_AXIS_SCALE_VAL = 100    # Scale right stick X-axis by 100 to match the changeSpeed method input range
     L_X_AXIS_SCALE_VAL = 100    # Scale left stick X-axis by 100 to match the changeSpeed method input range
     R_Y_AXIS_SCALE_VAL = 100    # Scale right stick Y-axis by 100 to match the changeSpeed method input range
     L_Y_AXIS_SCALE_VAL = 100    # Scale left stick Y-axis by 100 to match the changeSpeed method input range
