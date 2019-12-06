@@ -69,8 +69,8 @@ class DC_Motor_Controller:
 
         GPIO.setup(int(argA), GPIO.OUT)  # Set pin as output
         GPIO.setup(int(argB), GPIO.OUT)  # "
-        self.bPWM = GPIO.PWM(argB, 10)   # "
-        self.aPWM = GPIO.PWM(argA, 10)   # Set PWM frewquency to 40hz
+        self.aPWM = GPIO.PWM(argA, 50)   # Set PWM frewquency to 40hz
+        self.bPWM = GPIO.PWM(argB, 50)   # "
 
         self.aPWM.start(self.speed)   # Activate PWM for pin A
         self.bPWM.start(self.speed)   # Activate PWM for pin B
@@ -150,8 +150,8 @@ def __main__():
     #
 
     # Initialize motor controller objects
-    Rmotor = DC_Motor_Controller(MOTOR_1A, MOTOR_1B)
     Lmotor = DC_Motor_Controller(MOTOR_2A, MOTOR_2B)
+    Rmotor = DC_Motor_Controller(MOTOR_1A, MOTOR_1B)
 
     # Initialize DualShock4 Controller Connection
     DS4 = Remote_Control()
