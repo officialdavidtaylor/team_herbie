@@ -81,12 +81,16 @@ class DC_Motor_Controller:
         if self.speed != newSpeed:
             if newSpeed > 0:
                 self.bPWM.ChangeDutyCycle(0)
+                print("\n\nThis speed crashed it: ", newSpeed)
                 self.aPWM.ChangeDutyCycle(newSpeed)
             elif newSpeed < 0:
                 self.aPWM.ChangeDutyCycle(0)
+                print("\n\nThis speed crashed it: ", newSpeed)
                 self.bPWM.ChangeDutyCycle(newSpeed)
             else:
+                print("\n\nThis speed crashed it: ", newSpeed)
                 self.aPWM.ChangeDutyCycle(0)
+                print("\n\nThis speed crashed it: ", newSpeed)
                 self.bPWM.ChangeDutyCycle(0)
             self.speed = newSpeed
 
