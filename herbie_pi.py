@@ -82,9 +82,9 @@ class DC_Motor_Controller:
             if newSpeed > 0:
                 self.bPWM.ChangeDutyCycle(0)
                 self.aPWM.ChangeDutyCycle(newSpeed)
-            elif newSpeed < 0:
+            if newSpeed < 0:
                 self.aPWM.ChangeDutyCycle(0)
-                self.bPWM.ChangeDutyCycle(-newSpeed)    # Make negative
+                self.bPWM.ChangeDutyCycle(-newSpeed)    # Make positive
             else:
                 self.aPWM.ChangeDutyCycle(0)
                 self.bPWM.ChangeDutyCycle(0)
@@ -150,8 +150,8 @@ def __main__():
     #
 
     # Initialize motor controller objects
-    Lmotor = DC_Motor_Controller(MOTOR_2A, MOTOR_2B)
     Rmotor = DC_Motor_Controller(MOTOR_1A, MOTOR_1B)
+    Lmotor = DC_Motor_Controller(MOTOR_2A, MOTOR_2B)
 
     # Initialize DualShock4 Controller Connection
     DS4 = Remote_Control()
@@ -160,8 +160,8 @@ def __main__():
 
     while True:
         DS4.update()
-        Lmotor.changeSpeed(int(DS4.L_Y_Axis) * L_Y_AXIS_SCALE_VAL)
         Rmotor.changeSpeed(int(DS4.R_Y_Axis) * R_Y_AXIS_SCALE_VAL)
+        Lmotor.changeSpeed(int(DS4.L_Y_Axis) * L_Y_AXIS_SCALE_VAL)
 
 
 #-----</FUNCTIONS>-----
