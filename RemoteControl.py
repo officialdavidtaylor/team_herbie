@@ -59,7 +59,7 @@ try:
         events = pygame.event.get()
         for event in events:
             if event.type == pygame.JOYBUTTONDOWN:
-                print(controller.get_axis(5))
+                print(controller.get_axis(4))
 
 except KeyboardInterrupt:
     print("EXITING NOW")
