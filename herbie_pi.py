@@ -79,16 +79,16 @@ class DC_Motor_Controller:
 
         if speed == newSpeed:
             break
-
-        if newSpeed > 0:
-            bPWM.ChangeDutyCycle(0)
-            aPWM.ChangeDutyCycle(newSpeed)
-        elif newSpeed < 0:
-            aPWM.ChangeDutyCycle(0)
-            bPWM.ChangeDutyCycle(newSpeed)
         else:
-            aPWM.ChangeDutyCycle(0)
-            bPWM.ChangeDutyCycle(0)
+            if newSpeed > 0:
+                bPWM.ChangeDutyCycle(0)
+                aPWM.ChangeDutyCycle(newSpeed)
+            elif newSpeed < 0:
+                aPWM.ChangeDutyCycle(0)
+                bPWM.ChangeDutyCycle(newSpeed)
+            else:
+                aPWM.ChangeDutyCycle(0)
+                bPWM.ChangeDutyCycle(0)
 
 #class LED_Controller:
 #    """Utilizes the Adafruit Neopixel library to control the output of the Neopixel LED ring."""
