@@ -52,6 +52,9 @@ MOTOR_1B = 33   # "
 MOTOR_2A = 35   # Used for the left side of the vehicle
 MOTOR_2B = 37   # "
 
+# CONSTANTS
+DRIVE_MODES = 2
+
 #-----</GLOBAL VARIABLES>-----
 
 
@@ -86,7 +89,10 @@ class DC_Motor_Controller:
         self.driveMode = mode
 
     def cycleMode(self):
-        (self.driveMode == 0) if (self.driveMode) else (self.driveMode += 1)
+        if self.driveMode >= DRIVE_MODES:
+            self.driveMode == 0
+        else:
+            self.driveMode += 1.0
 
     def changeSpeed(self, rightStick, leftStick):
         """Input values of rightStick and leftStick between -100 and 100"""
