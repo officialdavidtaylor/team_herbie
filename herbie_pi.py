@@ -46,10 +46,10 @@ import pygame
 # GPIO PIN MAPPING
 LED_PIN = 12
 
-MOTOR_1A = 5    # Used for the right side of the vehicle
-MOTOR_1B = 6    # "
-MOTOR_2A = 13   # Used for the left side of the vehicle
-MOTOR_2B = 19   # "
+MOTOR_1A = 29   # Used for the right side of the vehicle
+MOTOR_1B = 31   # "
+MOTOR_2A = 33   # Used for the left side of the vehicle
+MOTOR_2B = 35   # "
 
 #-----</GLOBAL VARIABLES>-----
 
