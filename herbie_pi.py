@@ -85,11 +85,6 @@ class DC_Motor_Controller:
             self.aPWM.ChangeDutyCycle(0)
             self.bPWM.ChangeDutyCycle(-newSpeed)    # Make positive
 
-#           DECOMISSIONED - TOOK TOO LONG
-#        else:
-#            self.aPWM.ChangeDutyCycle(0)
-#            self.bPWM.ChangeDutyCycle(0)
-
 #class LED_Controller:
 #    """Utilizes the Adafruit Neopixel library to control the output of the Neopixel LED ring."""
 #
@@ -128,13 +123,12 @@ class Remote_Control:
         self.controller = pygame.joystick.Joystick(0) # Connect to the controller (and hope that it is paired with the Pi)
         self.controller.init()   # Prepare to read data from controller
 
-#       DECOMISSIONED - TOOK TOO LONG
-#    def update(self):   # Only update the relavent buttons/axies
-#        pygame.event.get()
-#        self.L_Y_Axis = self.controller.get_axis(1)
-#        self.R_Y_Axis = self.controller.get_axis(4)
-#        self.Ex = self.controller.get_button(0)
-#        self.PS = self.controller.get_button(10)
+    def update(self):   # Only update the relavent buttons/axies
+        pygame.event.get()
+        self.L_Y_Axis = self.controller.get_axis(1)
+        self.R_Y_Axis = self.controller.get_axis(4)
+        self.Ex = self.controller.get_button(0)
+        self.PS = self.controller.get_button(10)
 
 #class Autonomous_Control:
 #   """NVIDIA Jetson Nano is used to provide motor control feedback based on realtime video processing"""
@@ -160,10 +154,9 @@ def __main__():
     L_Y_AXIS_SCALE_VAL = 100    # Scale left stick Y-axis by 100 to match the changeSpeed method input range
 
     while True:
-        pygame.event.get()
-        Rmotor.changeSpeed(DS4.controller.get_axis(4) * R_Y_AXIS_SCALE_VAL)
-        Lmotor.changeSpeed(DS4.controller.get_axis(1) * L_Y_AXIS_SCALE_VAL)
-
+        DS4.update()
+        Rmotor.changeSpeed(DS4.R_Y_Axis * R_Y_AXIS_SCALE_VAL)
+        Lmotor.changeSpeed(DS4.L_Y_Axis * L_Y_AXIS_SCALE_VAL)
 
 #-----</FUNCTIONS>-----
 
