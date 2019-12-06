@@ -99,7 +99,7 @@ class DC_Motor_Controller:
     def changeSpeed(self, rightStick, leftStick):
         """Input values of rightStick and leftStick between -100 and 100"""
 
-        if driveMode == 0:  # Intuitive Mode
+        if self.driveMode == 0:  # Intuitive Mode
             rSpeed = leftStick - (intuitiveGain * rightStick)
             lSpeed = leftStick + (intuitiveGain * rightStick)
 
@@ -123,7 +123,7 @@ class DC_Motor_Controller:
                 self.laPWM.ChangeDutyCycle(0)
                 self.lbPWM.ChangeDutyCycle(-lSpeed)    # Make positive
 
-        elif driveMode == 1:# Tank Mode
+        elif self.driveMode == 1:# Tank Mode
             if rightStick > 0:
                 self.rbPWM.ChangeDutyCycle(0)
                 self.raPWM.ChangeDutyCycle(rightStick)
