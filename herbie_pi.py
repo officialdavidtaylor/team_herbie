@@ -64,8 +64,9 @@ class DC_Motor_Controller:
 
     """Object for controlling the DC motors with software PWM, courtesy of the RPi.GPIO library"""
 
+    # Default data members
     speed = 0
-
+    driveMode = 0
     intuitiveGain = 0.5
 
     # Pass the GPIO numbers for motor connections A and B
@@ -100,8 +101,8 @@ class DC_Motor_Controller:
         """Input values of rightStick and leftStick between -100 and 100"""
 
         if self.driveMode == 0:  # Intuitive Mode
-            rSpeed = leftStick - (intuitiveGain * rightStick)
-            lSpeed = leftStick + (intuitiveGain * rightStick)
+            rSpeed = leftStick - (self.intuitiveGain * rightStick)
+            lSpeed = leftStick + (self.intuitiveGain * rightStick)
 
             if rSpeed > 100: rSpeed = 100
             if rSpeed < -100: rSpeed = -100
