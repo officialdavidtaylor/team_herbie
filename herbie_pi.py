@@ -223,8 +223,8 @@ def __main__():
                 sleep(0.25)     # Artificial debouncing just in case (don't want rapid mode changing)
 
     except KeyboardInterrupt:
-        print("EXITING NOW")
-        controller.quit()
+        print("\nEXITING NOW\n")
+        DS4.controller.quit()
         GPIO.cleanup()  # to be used when GPIO is active
 
 #-----</FUNCTIONS>-----
