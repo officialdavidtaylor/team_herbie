@@ -221,6 +221,10 @@ def __main__():
                 motors.changeSpeed((DS4.R_Y_Axis * R_Y_AXIS_SCALE_VAL), (DS4.L_Y_Axis * L_Y_AXIS_SCALE_VAL))
             if DS4.PS:
                 motors.cycleMode()
+                if driveMode >= (DRIVE_MODES - 1):
+                    driveMode == 0
+                else:
+                    driveMode += 1.0
                 sleep(0.25)     # Artificial debouncing just in case (don't want rapid mode changing)
 
     except KeyboardInterrupt:
