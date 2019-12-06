@@ -80,14 +80,14 @@ class DC_Motor_Controller:
 
         if self.speed != newSpeed:
             if newSpeed > 0:
-                bPWM.ChangeDutyCycle(0)
-                aPWM.ChangeDutyCycle(newSpeed)
+                self.bPWM.ChangeDutyCycle(0)
+                self.aPWM.ChangeDutyCycle(newSpeed)
             elif newSpeed < 0:
-                aPWM.ChangeDutyCycle(0)
-                bPWM.ChangeDutyCycle(newSpeed)
+                self.aPWM.ChangeDutyCycle(0)
+                self.bPWM.ChangeDutyCycle(newSpeed)
             else:
-                aPWM.ChangeDutyCycle(0)
-                bPWM.ChangeDutyCycle(0)
+                self.aPWM.ChangeDutyCycle(0)
+                self.bPWM.ChangeDutyCycle(0)
             self.speed = newSpeed
 
 #class LED_Controller:
