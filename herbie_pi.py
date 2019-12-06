@@ -92,7 +92,7 @@ class DC_Motor_Controller:
         self.driveMode = mode
 
     def cycleMode(self):
-        if self.driveMode >= DRIVE_MODES:
+        if self.driveMode >= (DRIVE_MODES - 1):
             self.driveMode == 0
         else:
             self.driveMode += 1.0
@@ -181,6 +181,7 @@ class Remote_Control:
     def update(self):   # Only update the relavent buttons/axies
         pygame.event.get()
         self.L_Y_Axis = self.controller.get_axis(1)
+        self.R_X_Axis = self.controller.get_axis(3)
         self.R_Y_Axis = self.controller.get_axis(4)
         self.Ex = self.controller.get_button(0)
         self.PS = self.controller.get_button(10)
