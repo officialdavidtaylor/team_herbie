@@ -92,10 +92,10 @@ class DC_Motor_Controller:
         self.driveMode = mode
 
     def cycleMode(self):
-        if self.driveMode >= (DRIVE_MODES - 1):
+        if self.driveMode == (DRIVE_MODES - 1):
             self.driveMode == 0
         else:
-            self.driveMode += 1.0
+            self.driveMode += 1
 
     def changeSpeed(self, rightStick, leftStick):
         """Input values of rightStick and leftStick between -100 and 100"""
@@ -221,10 +221,10 @@ def __main__():
                 motors.changeSpeed((DS4.R_Y_Axis * R_Y_AXIS_SCALE_VAL), (DS4.L_Y_Axis * L_Y_AXIS_SCALE_VAL))
             if DS4.PS:
                 motors.cycleMode()
-                if driveMode >= (DRIVE_MODES - 1):
+                if driveMode == (DRIVE_MODES - 1):
                     driveMode == 0
                 else:
-                    driveMode += 1.0
+                    driveMode += 1
                 sleep(0.25)     # Artificial debouncing just in case (don't want rapid mode changing)
 
     except KeyboardInterrupt:
