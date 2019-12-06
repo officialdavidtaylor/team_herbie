@@ -64,10 +64,11 @@ class DC_Motor_Controller:
 
     # Pass the GPIO numbers for motor connections A and B
     def __init__(self, argA, argB):
+        GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BOARD)    # See RPi.GPIO docs for what this is
 
-        GPIO.setup(argA, GPIO.OUT)  # Set pin as output
-        GPIO.setup(argB, GPIO.OUT)  # "
+        GPIO.setup(D5, GPIO.OUT)  # Set pin as output
+        GPIO.setup(int(argB), GPIO.OUT)  # "
         self.aPWM = GPIO.PWM(argA, 40)   # Set PWM frewquency to 40hz
         self.bPWM = GPIO.PWM(argB, 40)   # "
 
@@ -151,13 +152,13 @@ def __main__():
 
     # Initialize DualShock4 Controller Connection
     DS4 = Remote_Control()
-    L_Y_AXIS_SCALE_VAL = 100    # Scale left stick Y-axis by 100 to match the changeSpeed method input range
     R_Y_AXIS_SCALE_VAL = 100    # Scale right stick Y-axis by 100 to match the changeSpeed method input range
+    L_Y_AXIS_SCALE_VAL = 100    # Scale left stick Y-axis by 100 to match the changeSpeed method input range
 
     while True:
         DS4.update()
-        Lmotor.changeSpeed(int(DS4.L_Y_Axis) * L_Y_AXIS_SCALE_VAL)
         Rmotor.changeSpeed(int(DS4.R_Y_Axis) * R_Y_AXIS_SCALE_VAL)
+        Lmotor.changeSpeed(int(DS4.L_Y_Axis) * L_Y_AXIS_SCALE_VAL)
 
 
 #-----</FUNCTIONS>-----
