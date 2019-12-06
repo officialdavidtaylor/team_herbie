@@ -67,7 +67,7 @@ class DC_Motor_Controller:
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BOARD)    # See RPi.GPIO docs for what this is
 
-        GPIO.setup(D5, GPIO.OUT)  # Set pin as output
+        GPIO.setup(int(argA), GPIO.OUT)  # Set pin as output
         GPIO.setup(int(argB), GPIO.OUT)  # "
         self.aPWM = GPIO.PWM(argA, 40)   # Set PWM frewquency to 40hz
         self.bPWM = GPIO.PWM(argB, 40)   # "
@@ -142,6 +142,8 @@ class Remote_Control:
 #-----<FUNCTIONS>-----
 
 def __main__():
+
+    GPIO.cleanup()  # Clear any previously used GPIO modes
 
     # Initialize Neopixel ring
     #
