@@ -75,7 +75,7 @@ class DC_Motor_Controller:
         self.aPWM.start(self.speed)   # Activate PWM for pin A
         self.bPWM.start(self.speed)   # Activate PWM for pin B
 
-    def changeSpeed(self, newSpeed):
+    def changeSpeed(newSpeed):
         """Input values between -100 and 100"""
 
         if newSpeed < 0:
@@ -87,7 +87,6 @@ class DC_Motor_Controller:
         else:
             self.aPWM.ChangeDutyCycle(0)
             self.bPWM.ChangeDutyCycle(0)
-        self.speed = newSpeed
 
 #class LED_Controller:
 #    """Utilizes the Adafruit Neopixel library to control the output of the Neopixel LED ring."""
