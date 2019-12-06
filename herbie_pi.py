@@ -219,7 +219,7 @@ def __main__():
             if driveMode == 1:  # Tank Mode
                 motors.changeSpeed((DS4.R_Y_Axis * R_Y_AXIS_SCALE_VAL), (DS4.L_Y_Axis * L_Y_AXIS_SCALE_VAL))
             if DS4.PS:
-                DS4.cycleMode()
+                motors.cycleMode()
                 sleep(0.25)     # Artificial debouncing just in case (don't want rapid mode changing)
 
     except KeyboardInterrupt:
