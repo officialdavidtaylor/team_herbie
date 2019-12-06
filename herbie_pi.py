@@ -67,7 +67,7 @@ class DC_Motor_Controller:
     # Default data members
     speed = 0
     driveMode = 0
-    intuitiveGain = 0.5
+    intuitiveGain = 0.8
 
     # Pass the GPIO numbers for motor connections A and B
     def __init__(self, pinRA, pinRB, pinLA, pinLB, mode):
