@@ -18,6 +18,7 @@
 # - resource    |   url
 #
 # Feature Requests: (based on priority)
+# - Optomize changeSpeed method
 # - Integrate NVIDIA Jetson Nano (with either ML or OpenCV image processing)
 # - Add a startup verification system (probably return a confirmation after all of the object constructors are run?) that gives LED feedback (progress bar for boot?).
 #  - Add controller pairing failsafe
@@ -63,27 +64,71 @@ class DC_Motor_Controller:
     speed = 0
 
     # Pass the GPIO numbers for motor connections A and B
-    def __init__(self, argA, argB):
+    def __init__(self, pinRA, pinRB, pinLA, pinLB, mode):
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BOARD)    # See RPi.GPIO docs for what this is
 
-        GPIO.setup(int(argA), GPIO.OUT)  # Set pin as output
-        GPIO.setup(int(argB), GPIO.OUT)  # "
-        self.aPWM = GPIO.PWM(argA, 50)   # Set PWM frewquency to 40hz
-        self.bPWM = GPIO.PWM(argB, 50)   # "
+        GPIO.setup(int(pinRA), GPIO.OUT)    # Set pin as output
+        GPIO.setup(int(pinRB), GPIO.OUT)    # "
+        GPIO.setup(int(pinLA), GPIO.OUT)    # "
+        GPIO.setup(int(pinLB), GPIO.OUT)    # "
 
-        self.aPWM.start(self.speed)   # Activate PWM for pin A
-        self.bPWM.start(self.speed)   # Activate PWM for pin B
+        self.raPWM = GPIO.PWM(pinRA, 50)    # Set PWM frewquency in Hz
+        self.rbPWM = GPIO.PWM(pinRB, 50)    # "
+        self.laPWM = GPIO.PWM(pinLA, 50)    # "
+        self.lbPWM = GPIO.PWM(pinLB, 50)    # "
 
-    def changeSpeed(self, newSpeed):
-        """Input values between -100 and 100"""
+        self.raPWM.start(self.speed)    # Activate PWM for pin RA
+        self.rbPWM.start(self.speed)    # Activate PWM for pin RB
+        self.laPWM.start(self.speed)    # Activate PWM for pin LA
+        self.lbPWM.start(self.speed)    # Activate PWM for pin LB
 
-        if newSpeed > 0:
-            self.bPWM.ChangeDutyCycle(0)
-            self.aPWM.ChangeDutyCycle(newSpeed)
-        else:
-            self.aPWM.ChangeDutyCycle(0)
-            self.bPWM.ChangeDutyCycle(-newSpeed)    # Make positive
+        self.driveMode = mode
+
+    def cycleMode(self):
+        (self.driveMode = 0) if (self.driveMode) else (self.driveMode += 1)
+
+    def changeSpeed(self, rightStick, leftStick):
+        """Input values of rightStick and leftStick between -100 and 100"""
+
+        if driveMode == 0:  # Intuitive Mode
+            rSpeed = leftStick - (0.5 * rightStick)
+            rSpeed = 100 if rSpeed > 100 else
+            rSpeed = -100 if rSpeed < -100 else
+
+            lSpeed = leftStick + (0.5 * rightStick)
+            lSpeed = 100 if lSpeed > 100 else
+            lSpeed = -100 if lSpeed < -100 else
+
+            if rSpeed > 0:
+                self.rbPWM.ChangeDutyCycle(0)
+                self.raPWM.ChangeDutyCycle(rSpeed)
+            else:
+                self.raPWM.ChangeDutyCycle(0)
+                self.rbPWM.ChangeDutyCycle(-rSpeed)    # Make positive
+
+            if lSpeed > 0:
+                self.lbPWM.ChangeDutyCycle(0)
+                self.laPWM.ChangeDutyCycle(lSpeed)
+            else:
+                self.laPWM.ChangeDutyCycle(0)
+                self.lbPWM.ChangeDutyCycle(-lSpeed)    # Make positive
+
+        #elif driveMode == 1:# Tank Mode
+            if rightStick > 0:
+                self.rbPWM.ChangeDutyCycle(0)
+                self.raPWM.ChangeDutyCycle(rightStick)
+            else:
+                self.raPWM.ChangeDutyCycle(0)
+                self.rbPWM.ChangeDutyCycle(-rightStick)    # Make positive
+
+            if leftStick > 0:
+                self.lbPWM.ChangeDutyCycle(0)
+                self.laPWM.ChangeDutyCycle(leftStick)
+            else:
+                self.laPWM.ChangeDutyCycle(0)
+                self.lbPWM.ChangeDutyCycle(-leftStick)    # Make positive
+
 
 #class LED_Controller:
 #    """Utilizes the Adafruit Neopixel library to control the output of the Neopixel LED ring."""
@@ -106,7 +151,7 @@ class Remote_Control:
     R_Trigger = False   # PyGame Button 7
     Share = False       # PyGame Button 8
     Options = False     # PyGame Button 9
-    PS = False        # PyGame Button 10
+    PS = False          # PyGame Button 10
     L_Stick = False     # PyGame Button 11
     R_Stick = False     # PyGame Button 12
 
@@ -141,22 +186,31 @@ def __main__():
 
     GPIO.cleanup()  # Clear any previously used GPIO modes
 
+    driveMode = 0   # Start in Intuitive Mode (mode 0)
+
     # Initialize Neopixel ring
     #
 
     # Initialize motor controller objects
-    Rmotor = DC_Motor_Controller(MOTOR_1A, MOTOR_1B)
-    Lmotor = DC_Motor_Controller(MOTOR_2A, MOTOR_2B)
+    motors = DC_Motor_Controller(MOTOR_A, MOTOR_B, driveMode)
 
     # Initialize DualShock4 Controller Connection
     DS4 = Remote_Control()
+    R_X_AXIS_SCALE_VAL = 100    # Scale right stick X-axis by 100 to match the changeSpeed method input range
+    L_X_AXIS_SCALE_VAL = 100    # Scale left stick X-axis by 100 to match the changeSpeed method input range
     R_Y_AXIS_SCALE_VAL = 100    # Scale right stick Y-axis by 100 to match the changeSpeed method input range
     L_Y_AXIS_SCALE_VAL = 100    # Scale left stick Y-axis by 100 to match the changeSpeed method input range
 
+
     while True:
         DS4.update()
-        Rmotor.changeSpeed(DS4.R_Y_Axis * R_Y_AXIS_SCALE_VAL)
-        Lmotor.changeSpeed(DS4.L_Y_Axis * L_Y_AXIS_SCALE_VAL)
+        if driveMode == 0:  # Intuitive Mode
+            motors.changeSpeed((DS4.R_X_Axis * R_X_AXIS_SCALE_VAL), (DS4.L_Y_Axis * L_Y_AXIS_SCALE_VAL))
+        if driveMode == 1:  # Tank Mode
+            motors.changeSpeed((DS4.R_Y_Axis * R_Y_AXIS_SCALE_VAL), (DS4.L_Y_Axis * L_Y_AXIS_SCALE_VAL))
+        if DS4.PS:
+            DS4.cycleMode()
+            sleep(0.25)     # Artificial debouncing just in case (don't want rapid mode changing)
 
 #-----</FUNCTIONS>-----
 
