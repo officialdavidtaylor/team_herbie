@@ -18,6 +18,7 @@
 # - resource    |   url
 #
 # Feature Requests: (based on priority)
+# - Fix inability to re-change modes
 # - Optomize changeSpeed method
 # - Integrate NVIDIA Jetson Nano (with either ML or OpenCV image processing)
 # - Add a startup verification system (probably return a confirmation after all of the object constructors are run?) that gives LED feedback (progress bar for boot?).
@@ -38,10 +39,6 @@ import pygame
 #import board    # Adafruit library per https://circuitpython.readthedocs.io/projects/neopixel/en/latest/
 #import neopixel # library for controlling the LED ring
 
-#import rpi_dc_lib  # not used in favor of Software PWM coded in our own DC_Motor_Controller class
-
-#-----</LIBRARIES>-----
-
 #-----<GLOBAL VARIABLES>-----
 
 # GPIO PIN MAPPING
@@ -55,9 +52,6 @@ MOTOR_2B = 37   # "
 # CONSTANTS
 DRIVE_MODES = 2
 
-#-----</GLOBAL VARIABLES>-----
-
-
 #-----<CLASSES>-----
 
 class DC_Motor_Controller:
@@ -66,7 +60,6 @@ class DC_Motor_Controller:
 
     # Default data members
     speed = 0
-    driveMode = 0
     intuitiveGain = 0.8
 
     # Pass the GPIO numbers for motor connections A and B
@@ -97,6 +90,7 @@ class DC_Motor_Controller:
         else:
             self.driveMode += 1
 
+    # Output of changeSpeed depends on the current drive mode.
     def changeSpeed(self, rightStick, leftStick):
         """Input values of rightStick and leftStick between -100 and 100"""
 
