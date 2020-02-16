@@ -59,7 +59,7 @@ class DC_Motor_Controller:
 
     # Default data members
     idleSpeed = 30.0
-    intuitiveGain = 1.0
+    intuitiveGain = 0.1
 
     # Pass the GPIO numbers for motor connections A and B
     def __init__(self, pinR, pinL, mode):
@@ -69,8 +69,8 @@ class DC_Motor_Controller:
         GPIO.setup(int(pinR), GPIO.OUT)    # Change output mode of pinR
         GPIO.setup(int(pinL), GPIO.OUT)    # Change output mode of PinL
 
-        self.R_PWM = GPIO.PWM(pinR, 210)    # Original setpoint was 200Hz: dhruv's gut told us we needed 192Hz i guess
-        self.L_PWM = GPIO.PWM(pinL, 210)    # "
+        self.R_PWM = GPIO.PWM(pinR, 209)    # Original setpoint was 200Hz: dhruv's gut told us we needed 192Hz i guess
+        self.L_PWM = GPIO.PWM(pinL, 209)    # "
 
         self.R_PWM.start(self.idleSpeed)    # Activate PWM for pin R
         self.L_PWM.start(self.idleSpeed)    # Activate PWM for pin L
