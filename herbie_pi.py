@@ -4,21 +4,21 @@
 # ShortDesc:    This is the code of the Raspberry Pi on our senior design robot
 #
 # Usage:
-# - Run on boot on Raspberry Pi 4B
-# - Control mode *will be* toggled with the PlayStation main Button
-#  - Auto: Thumb Up/Down signal will activate/deactivate following
-#  - Manual: left/right joystick Y axis controls left/right motors
+# - Control mode toggled with the PlayStation main Button
+#  - Auto: CV run on the NVIDIA Jetson Nano will steer the car
+#  - Manual: DualShock4 controller to steer the car
 #
 # Changelog
 # Version   Date        Delta
 # v0.1      2019-12-01  List of libraries
 # v1.0      2019-12-05  Funtional driving code
-# v2.?      2020-02-15  Updated for VictorSPX speed controllers
+# v2.0      2020-02-15  Updated for VictorSPX speed controllers
 #
 # Resources:
 # - resource    |   url
 #
 # Feature Requests: (based on priority)
+# - Run on boot on Raspberry Pi 4B
 # - Fix inability to re-change modes
 # - Optomize changeSpeed method
 # - Integrate NVIDIA Jetson Nano (with either ML or OpenCV image processing)
@@ -59,7 +59,7 @@ class DC_Motor_Controller:
 
     # Default data members
     idleSpeed = 30.0
-    intuitiveGain = 0.1
+    intuitiveGain = 0.2  # tune this variable per drivetrain
 
     # Pass the GPIO numbers for motor connections A and B
     def __init__(self, pinR, pinL, mode):
@@ -79,7 +79,7 @@ class DC_Motor_Controller:
 
     def cycleMode(self):
         if self.driveMode == (DRIVE_MODES - 1):
-            self.driveMode == 0
+            self.driveMode = 0
         else:
             self.driveMode += 1
 
