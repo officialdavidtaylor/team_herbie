@@ -99,22 +99,24 @@ class DC_Motor_Controller:
 
             if rSpeed > 0:
                 self.R_PWM.ChangeDutyCycle((rSpeed/10)+self.idleSpeed)
+                print("right speed changing")
             else:
                 self.R_PWM.ChangeDutyCycle(self.idleSpeed)
 
             if lSpeed > 0:
                 self.L_PWM.ChangeDutyCycle((lSpeed/10)+self.idleSpeed)
+                print("left speed changing")
             else:
                 self.L_PWM.ChangeDutyCycle(self.idleSpeed)
 
         elif self.driveMode == 1:# Tank Mode
             if rightStick > 0:
-                self.R_PWM.ChangeDutyCycle((rSpeed/10)+self.idleSpeed)
+                self.R_PWM.ChangeDutyCycle((rightStick/10)+self.idleSpeed)
             else:
                 self.R_PWM.ChangeDutyCycle(self.idleSpeed)
 
             if leftStick > 0:
-                self.L_PWM.ChangeDutyCycle((lSpeed/10)+self.idleSpeed)
+                self.L_PWM.ChangeDutyCycle((leftStick/10)+self.idleSpeed)
             else:
                 self.L_PWM.ChangeDutyCycle(self.idleSpeed)
 
@@ -185,6 +187,7 @@ def __main__():
 
     # Initialize DualShock4 Controller Connection
     DS4 = Remote_Control()
+    print("Remote Control initiated\n")
     R_X_AXIS_SCALE_VAL = 100    # Scale right stick X-axis by 100 to match the changeSpeed method input range
     L_X_AXIS_SCALE_VAL = 100    # Scale left stick X-axis by 100 to match the changeSpeed method input range
     R_Y_AXIS_SCALE_VAL = 100    # Scale right stick Y-axis by 100 to match the changeSpeed method input range
