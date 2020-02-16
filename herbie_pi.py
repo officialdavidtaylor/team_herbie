@@ -100,7 +100,7 @@ class DC_Motor_Controller:
             if rSpeed > 0:
                 self.R_PWM.ChangeDutyCycle((rSpeed/10)+idleSpeed)
             else:
-                self.raPWM.ChangeDutyCycle(idleSpeed)
+                self.R_PWM.ChangeDutyCycle(idleSpeed)
 
             if lSpeed > 0:
                 self.L_PWM.ChangeDutyCycle((lSpeed/10)+idleSpeed)
@@ -111,7 +111,7 @@ class DC_Motor_Controller:
             if rSpeed > 0:
                 self.R_PWM.ChangeDutyCycle((rightStick/10)+idleSpeed)
             else:
-                self.raPWM.ChangeDutyCycle(idleSpeed)
+                self.R_PWM.ChangeDutyCycle(idleSpeed)
 
             if lSpeed > 0:
                 self.L_PWM.ChangeDutyCycle((leftStick/10)+idleSpeed)
