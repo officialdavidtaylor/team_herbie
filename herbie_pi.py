@@ -108,12 +108,12 @@ class DC_Motor_Controller:
                 self.L_PWM.ChangeDutyCycle(self.idleSpeed)
 
         elif self.driveMode == 1:# Tank Mode
-            if rSpeed > 0:
+            if rightStick > 0:
                 self.R_PWM.ChangeDutyCycle((rSpeed/10)+self.idleSpeed)
             else:
                 self.R_PWM.ChangeDutyCycle(self.idleSpeed)
 
-            if lSpeed > 0:
+            if leftStick > 0:
                 self.L_PWM.ChangeDutyCycle((lSpeed/10)+self.idleSpeed)
             else:
                 self.L_PWM.ChangeDutyCycle(self.idleSpeed)
