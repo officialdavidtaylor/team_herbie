@@ -69,8 +69,8 @@ class DC_Motor_Controller:
         GPIO.setup(int(pinR), GPIO.OUT)    # Change output mode of pinR
         GPIO.setup(int(pinL), GPIO.OUT)    # Change output mode of PinL
 
-        self.R_PWM = GPIO.PWM(pinR, 200)    # Set PWM frewquency in Hz
-        self.L_PWM = GPIO.PWM(pinL, 200)    # "
+        self.R_PWM = GPIO.PWM(pinR, 192)    # Original setpoint was 200Hz: oscilloscope told us we needed 192Hz i guess
+        self.L_PWM = GPIO.PWM(pinL, 192)    # "
 
         self.R_PWM.start(self.idleSpeed)    # Activate PWM for pin R
         self.L_PWM.start(self.idleSpeed)    # Activate PWM for pin L
