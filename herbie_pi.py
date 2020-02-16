@@ -4,7 +4,7 @@
 # ShortDesc:    This is the code of the Raspberry Pi on our senior design robot
 #
 # Usage:
-# - Run on boot on Raspberry Pi Zero W
+# - Run on boot on Raspberry Pi 4B
 # - Control mode *will be* toggled with the PlayStation main Button
 #  - Auto: Thumb Up/Down signal will activate/deactivate following
 #  - Manual: left/right joystick Y axis controls left/right motors
@@ -13,6 +13,7 @@
 # Version   Date        Delta
 # v0.1      2019-12-01  List of libraries
 # v1.0      2019-12-05  Funtional driving code
+# v2.?      2020-02-15  Updated for VictorSPX speed controllers
 #
 # Resources:
 # - resource    |   url
@@ -42,12 +43,10 @@ import pygame
 #-----<GLOBAL VARIABLES>-----
 
 # GPIO PIN MAPPING
-LED_PIN = 12
+LED_PIN = 18
 
-MOTOR_1A = 31   # Used for the right side of the vehicle
-MOTOR_1B = 33   # "
-MOTOR_2A = 35   # Used for the left side of the vehicle
-MOTOR_2B = 37   # "
+MOTOR_R = 12   # Used for the right side of the vehicle
+MOTOR_L = 13   # Used for the left side of the vehicle
 
 # CONSTANTS
 DRIVE_MODES = 2
@@ -56,31 +55,25 @@ DRIVE_MODES = 2
 
 class DC_Motor_Controller:
 
-    """Object for controlling the DC motors with software PWM, courtesy of the RPi.GPIO library"""
+    """Object for controlling the DC motors with software PWM, utilizing the RPi.GPIO library"""
 
     # Default data members
-    speed = 0
-    intuitiveGain = 0.8
+    idleSpeed = 30.0
+    intuitiveGain = 1.0
 
     # Pass the GPIO numbers for motor connections A and B
-    def __init__(self, pinRA, pinRB, pinLA, pinLB, mode):
+    def __init__(self, pinR, pinL, mode):
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BOARD)    # See RPi.GPIO docs for what this is
 
-        GPIO.setup(int(pinRA), GPIO.OUT)    # Set pin as output
-        GPIO.setup(int(pinRB), GPIO.OUT)    # "
-        GPIO.setup(int(pinLA), GPIO.OUT)    # "
-        GPIO.setup(int(pinLB), GPIO.OUT)    # "
+        GPIO.setup(int(pinR), GPIO.OUT)    # Change output mode of pinR
+        GPIO.setup(int(pinL), GPIO.OUT)    # Change output mode of PinL
 
-        self.raPWM = GPIO.PWM(pinRA, 50)    # Set PWM frewquency in Hz
-        self.rbPWM = GPIO.PWM(pinRB, 50)    # "
-        self.laPWM = GPIO.PWM(pinLA, 50)    # "
-        self.lbPWM = GPIO.PWM(pinLB, 50)    # "
+        self.R_PWM = GPIO.PWM(pinR, 200)    # Set PWM frewquency in Hz
+        self.L_PWM = GPIO.PWM(pinR, 200)    # "
 
-        self.raPWM.start(self.speed)    # Activate PWM for pin RA
-        self.rbPWM.start(self.speed)    # Activate PWM for pin RB
-        self.laPWM.start(self.speed)    # Activate PWM for pin LA
-        self.lbPWM.start(self.speed)    # Activate PWM for pin LB
+        self.R_PWM.start(self.idleSpeed)    # Activate PWM for pin R
+        self.L_PWM.start(self.idleSpeed)    # Activate PWM for pin L
 
         self.driveMode = mode
 
@@ -105,33 +98,25 @@ class DC_Motor_Controller:
             if lSpeed < -100: lSpeed = -100
 
             if rSpeed > 0:
-                self.rbPWM.ChangeDutyCycle(0)
-                self.raPWM.ChangeDutyCycle(rSpeed)
+                self.R_PWM.ChangeDutyCycle((rSpeed/10)+idleSpeed)
             else:
-                self.raPWM.ChangeDutyCycle(0)
-                self.rbPWM.ChangeDutyCycle(-rSpeed)    # Make positive
+                self.raPWM.ChangeDutyCycle(idleSpeed)
 
             if lSpeed > 0:
-                self.lbPWM.ChangeDutyCycle(0)
-                self.laPWM.ChangeDutyCycle(lSpeed)
+                self.L_PWM.ChangeDutyCycle((lSpeed/10)+idleSpeed)
             else:
-                self.laPWM.ChangeDutyCycle(0)
-                self.lbPWM.ChangeDutyCycle(-lSpeed)    # Make positive
+                self.L_PWM.ChangeDutyCycle(idleSpeed)
 
         elif self.driveMode == 1:# Tank Mode
-            if rightStick > 0:
-                self.rbPWM.ChangeDutyCycle(0)
-                self.raPWM.ChangeDutyCycle(rightStick)
+            if rSpeed > 0:
+                self.R_PWM.ChangeDutyCycle((rightStick/10)+idleSpeed)
             else:
-                self.raPWM.ChangeDutyCycle(0)
-                self.rbPWM.ChangeDutyCycle(-rightStick)    # Make positive
+                self.raPWM.ChangeDutyCycle(idleSpeed)
 
-            if leftStick > 0:
-                self.lbPWM.ChangeDutyCycle(0)
-                self.laPWM.ChangeDutyCycle(leftStick)
+            if lSpeed > 0:
+                self.L_PWM.ChangeDutyCycle((leftStick/10)+idleSpeed)
             else:
-                self.laPWM.ChangeDutyCycle(0)
-                self.lbPWM.ChangeDutyCycle(-leftStick)    # Make positive
+                self.L_PWM.ChangeDutyCycle(idleSpeed)
 
 
 #class LED_Controller:
@@ -197,7 +182,7 @@ def __main__():
     #
 
     # Initialize motor controller objects
-    motors = DC_Motor_Controller(MOTOR_1A, MOTOR_1B, MOTOR_2A, MOTOR_2B, driveMode)
+    motors = DC_Motor_Controller(MOTOR_R, MOTOR_L, driveMode)
 
     # Initialize DualShock4 Controller Connection
     DS4 = Remote_Control()
