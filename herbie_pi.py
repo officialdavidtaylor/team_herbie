@@ -98,26 +98,25 @@ class DC_Motor_Controller:
             if lSpeed < -100: lSpeed = -100
 
             if rSpeed > 0:
-                self.R_PWM.ChangeDutyCycle((rSpeed/10)+idleSpeed)
+                self.R_PWM.ChangeDutyCycle((rSpeed/10)+self.idleSpeed)
             else:
-                self.R_PWM.ChangeDutyCycle(idleSpeed)
+                self.R_PWM.ChangeDutyCycle(self.idleSpeed)
 
             if lSpeed > 0:
-                self.L_PWM.ChangeDutyCycle((lSpeed/10)+idleSpeed)
+                self.L_PWM.ChangeDutyCycle((lSpeed/10)+self.idleSpeed)
             else:
-                self.L_PWM.ChangeDutyCycle(idleSpeed)
+                self.L_PWM.ChangeDutyCycle(self.idleSpeed)
 
         elif self.driveMode == 1:# Tank Mode
             if rSpeed > 0:
-                self.R_PWM.ChangeDutyCycle((rightStick/10)+idleSpeed)
+                self.R_PWM.ChangeDutyCycle((rSpeed/10)+self.idleSpeed)
             else:
-                self.R_PWM.ChangeDutyCycle(idleSpeed)
+                self.R_PWM.ChangeDutyCycle(self.idleSpeed)
 
             if lSpeed > 0:
-                self.L_PWM.ChangeDutyCycle((leftStick/10)+idleSpeed)
+                self.L_PWM.ChangeDutyCycle((lSpeed/10)+self.idleSpeed)
             else:
-                self.L_PWM.ChangeDutyCycle(idleSpeed)
-
+                self.L_PWM.ChangeDutyCycle(self.idleSpeed)
 
 #class LED_Controller:
 #    """Utilizes the Adafruit Neopixel library to control the output of the Neopixel LED ring."""
