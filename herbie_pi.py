@@ -13,6 +13,7 @@
 # v0.1      2019-12-01  List of libraries
 # v1.0      2019-12-05  Funtional driving code
 # v2.0      2020-02-15  Updated for VictorSPX speed controllers
+# v2.1      2020-02-26  Added basic control system
 #
 # Resources:
 # - resource    |   url
@@ -29,7 +30,7 @@
 #------------------------------------------------------------------------------
 
 #-----<LIBRARIES>-----
-import RPi.GPIO as GPIO  # The GPIO library for the Jetson Nano
+import RPi.GPIO as GPIO  # The GPIO library for the Raspberry Pi
 
 from time import sleep
 
@@ -54,12 +55,17 @@ DRIVE_MODES = 2
 #-----<CLASSES>-----
 
 class DC_Motor_Controller:
-
     """Object for controlling the DC motors with software PWM, utilizing the RPi.GPIO library"""
 
     # Default data members
-    idleSpeed = 30.0
-    intuitiveGain = 0.2  # tune this variable per drivetrain
+    idleSpeed = 30.0    # Function of the speed controllers - PWM neutral has period of 1.5ms
+    speedScaler = 10    # Max speed is 40%, min speed is 20% due to PWM config
+
+    maxDeltaY = 1.0     # Greatest change between cycles for forward/reverse axis in percent
+    maxDeltaX = 2.0    # Greatest change between cycles for left/right axis in percent
+
+    rSpeed = 0          # State variable that will be adjusted towards setpoint defined by user input
+    lSpeed = 0          # "
 
     # Pass the GPIO numbers for motor connections A and B
     def __init__(self, pinR, pinL, mode):
@@ -86,23 +92,39 @@ class DC_Motor_Controller:
     # Output of changeSpeed depends on the current drive mode.
     def changeSpeed(self, rightStick, leftStick):
         """Input values of rightStick and leftStick between -100 and 100"""
+        # Check to see if values have changed, abort if not
+        if (rightStick == self.rSpeed) && (leftStick == self.lSpeed):
+            return false
 
-        if self.driveMode == 0:  # Intuitive Mode
-            rSpeed = leftStick + (self.intuitiveGain * rightStick)
-            lSpeed = leftStick - (self.intuitiveGain * rightStick)
+        # <--Experimental mixing algorithm-->
 
-            if rSpeed > 100: rSpeed = 100
-            if rSpeed < -100: rSpeed = -100
+        # Implement basic mixing algorithm
+        rTemp = leftStick + (maxDeltaX * (rightStick / (self.rSpeed + 1))) # be careful not to divide by zero
+        lTemp = leftStick - (maxDeltaX * (rightStick / (self.lSpeed + 1))) # "
 
-            if lSpeed > 100: lSpeed = 100
-            if lSpeed < -100: lSpeed = -100
+        # Limit rate of change for forward/backward motion
+        if ((lTemp - self.lSpeed) > self.maxDeltaY):
+            self.lSpeed += self.maxDeltaY
+        else if ((lTemp - self.lSpeed) < - self.maxDeltaY):
+            self.lSpeed -= self.maxDeltaY
+        else:
+            self.lSpeed = lTemp
 
-            self.R_PWM.ChangeDutyCycle(self.idleSpeed+(rSpeed/10))
-            self.L_PWM.ChangeDutyCycle(self.idleSpeed+(lSpeed/10))
+        if ((rTemp - self.rSpeed) > self.maxDeltaY):
+            self.rSpeed += self.maxDeltaY
+        else if ((rTemp - self.rSpeed) < - self.maxDeltaY):
+            self.rSpeed -= self.maxDeltaY
+        else:
+            self.rSpeed = rTemp
 
-        elif self.driveMode == 1:# Tank Mode
-            self.R_PWM.ChangeDutyCycle((rightStick/10)+self.idleSpeed)
-            self.L_PWM.ChangeDutyCycle((leftStick/10)+self.idleSpeed)
+        if self.rSpeed > 100: self.rSpeed = 100
+        if self.rSpeed < -100: self.rSpeed = -100
+
+        if self.lSpeed > 100: self.lSpeed = 100
+        if self.lSpeed < -100: self.lSpeed = -100
+
+        self.R_PWM.ChangeDutyCycle(self.idleSpeed+(self.rSpeed/speedScaler))
+        self.L_PWM.ChangeDutyCycle(self.idleSpeed+(self.lSpeed/speedScaler))
 
 #class LED_Controller:
 #    """Utilizes the Adafruit Neopixel library to control the output of the Neopixel LED ring."""
@@ -180,17 +202,7 @@ def __main__():
     try:
         while True:
             DS4.update()
-            if driveMode == 0:  # Intuitive Mode
-                motors.changeSpeed((DS4.R_X_Axis * R_X_AXIS_SCALE_VAL), (DS4.L_Y_Axis * L_Y_AXIS_SCALE_VAL))
-            if driveMode == 1:  # Tank Mode
-                motors.changeSpeed((DS4.R_Y_Axis * R_Y_AXIS_SCALE_VAL), (DS4.L_Y_Axis * L_Y_AXIS_SCALE_VAL))
-            if DS4.PS:
-                motors.cycleMode()
-                if driveMode == (DRIVE_MODES - 1):
-                    driveMode == 0
-                else:
-                    driveMode += 1
-                sleep(0.25)     # Artificial debouncing just in case (don't want rapid mode changing)
+            motors.changeSpeed((DS4.R_X_Axis * R_X_AXIS_SCALE_VAL), (DS4.L_Y_Axis * L_Y_AXIS_SCALE_VAL))
 
     except KeyboardInterrupt:
         print("\nEXITING NOW\n")
