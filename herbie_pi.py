@@ -99,8 +99,8 @@ class DC_Motor_Controller:
         # <--Experimental mixing algorithm-->
 
         # Implement basic mixing algorithm
-        rTemp = leftStick + (maxDeltaX * (rightStick / (self.rSpeed + 1))) # be careful not to divide by zero
-        lTemp = leftStick - (maxDeltaX * (rightStick / (self.lSpeed + 1))) # "
+        rTemp = leftStick + (self.maxDeltaX * (rightStick / (self.rSpeed + 1))) # be careful not to divide by zero
+        lTemp = leftStick - (self.maxDeltaX * (rightStick / (self.lSpeed + 1))) # "
 
         # Limit rate of change for forward/backward motion
         if ((lTemp - self.lSpeed) > self.maxDeltaY):
