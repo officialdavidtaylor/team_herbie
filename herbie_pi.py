@@ -105,14 +105,14 @@ class DC_Motor_Controller:
         # Limit rate of change for forward/backward motion
         if ((lTemp - self.lSpeed) > self.maxDeltaY):
             self.lSpeed += self.maxDeltaY
-        else if ((lTemp - self.lSpeed) < - self.maxDeltaY):
+        elif ((lTemp - self.lSpeed) < - self.maxDeltaY):
             self.lSpeed -= self.maxDeltaY
         else:
             self.lSpeed = lTemp
 
         if ((rTemp - self.rSpeed) > self.maxDeltaY):
             self.rSpeed += self.maxDeltaY
-        else if ((rTemp - self.rSpeed) < - self.maxDeltaY):
+        elif ((rTemp - self.rSpeed) < - self.maxDeltaY):
             self.rSpeed -= self.maxDeltaY
         else:
             self.rSpeed = rTemp
