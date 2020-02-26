@@ -61,7 +61,7 @@ class DC_Motor_Controller:
     idleSpeed = 30.0    # Function of the speed controllers - PWM neutral has period of 1.5ms
     speedScaler = 10    # Max speed is 40%, min speed is 20% due to PWM config
 
-    maxDeltaY = 1.0     # Greatest change between cycles for forward/reverse axis in percent
+    maxDeltaY = .50     # Greatest change between cycles for forward/reverse axis in percent
     maxDeltaX = 2.0    # Greatest change between cycles for left/right axis in percent
 
     rSpeed = 0          # State variable that will be adjusted towards setpoint defined by user input
