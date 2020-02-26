@@ -93,7 +93,7 @@ class DC_Motor_Controller:
     def changeSpeed(self, rightStick, leftStick):
         """Input values of rightStick and leftStick between -100 and 100"""
         # Check to see if values have changed, abort if not
-        if (rightStick == self.rSpeed) && (leftStick == self.lSpeed):
+        if (rightStick == self.rSpeed) and (leftStick == self.lSpeed):
             return false
 
         # <--Experimental mixing algorithm-->
