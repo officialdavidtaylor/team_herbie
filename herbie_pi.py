@@ -62,7 +62,7 @@ class DC_Motor_Controller:
     speedScaler = 10    # Max speed is 40%, min speed is 20% due to PWM config
 
     maxDeltaY = .50     # Greatest change between cycles for forward/reverse axis in percent
-    maxDeltaX = 2.0    # Greatest change between cycles for left/right axis in percent
+    maxDeltaX = 0.2    # Greatest change between cycles for left/right axis in percent
 
     rSpeed = 0          # State variable that will be adjusted towards setpoint defined by user input
     lSpeed = 0          # "
@@ -99,8 +99,8 @@ class DC_Motor_Controller:
         # <--Experimental mixing algorithm-->
 
         # Implement basic mixing algorithm
-        rTemp = leftStick + (self.maxDeltaX * (rightStick / (self.rSpeed + 1))) # be careful not to divide by zero
-        lTemp = leftStick - (self.maxDeltaX * (rightStick / (self.lSpeed + 1))) # "
+        rTemp = leftStick + (self.maxDeltaX * (rightStick)) # be careful not to divide by zero
+        lTemp = leftStick - (self.maxDeltaX * (rightStick)) # "
 
         # Limit rate of change for forward/backward motion
         if ((lTemp - self.lSpeed) > self.maxDeltaY):
