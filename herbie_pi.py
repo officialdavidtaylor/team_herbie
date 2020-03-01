@@ -34,7 +34,7 @@ import RPi.GPIO as GPIO  # The GPIO library for the Raspberry Pi
 
 from time import sleep
 import smbus 
-imoprt struct
+import struct
 
 # Used for PlayStation DualShock4 interfacing
 import pygame
