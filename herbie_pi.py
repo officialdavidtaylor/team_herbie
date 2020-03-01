@@ -34,6 +34,7 @@ import RPi.GPIO as GPIO  # The GPIO library for the Raspberry Pi
 
 from time import sleep
 import smbus 
+imoprt struct
 
 # Used for PlayStation DualShock4 interfacing
 import pygame
@@ -135,10 +136,12 @@ class DC_Motor_Controller:
             self.lSpeed = -100
 
         #send to arduino via i2c
-        self.bus.write_byte(self.address, self.idleSpeed + (self.rSpeed/self.speedScaler))
-        self.bus.write_byte(self.address, self.lSpeed + (self.lSpeed/self.speedScaler))
         
-
+        rMotorValue = self.idleSpeed + (self.rSpeed/self.speedScaler)
+        lMotorValue = self.lSpeed + (self.lSpeed/self.speedScaler)
+        package = struct.pack('ff', rMotorValue, lMotorValue)
+        bus.write_block_data(self.address, 1, list(package))
+        
         # self.R_PWM.ChangeDutyCycle(
         #     self.idleSpeed+(self.rSpeed/self.speedScaler))
         # self.L_PWM.ChangeDutyCycle(
