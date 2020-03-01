@@ -135,8 +135,8 @@ class DC_Motor_Controller:
             self.lSpeed = -100
 
         #send to arduino via i2c
-        self.bus.write_byte(address, self.idleSpeed + (self.rspeed/self.speedScaler))
-        self.bus.write_byte(address, self.lSpeed + (self.lSpeed/self.speedScaler))
+        self.bus.write_byte(self.address, self.idleSpeed + (self.rspeed/self.speedScaler))
+        self.bus.write_byte(self.address, self.lSpeed + (self.lSpeed/self.speedScaler))
         
 
         # self.R_PWM.ChangeDutyCycle(
