@@ -33,6 +33,7 @@
 import RPi.GPIO as GPIO  # The GPIO library for the Raspberry Pi
 
 from time import sleep
+import smbus 
 
 # Used for PlayStation DualShock4 interfacing
 import pygame
@@ -58,6 +59,10 @@ class DC_Motor_Controller:
     """Object for controlling the DC motors with software PWM, utilizing the RPi.GPIO library"""
 
     # Default data members
+    bus = smbus.SMBus(1)
+    address = 0x04
+
+
     idleSpeed = 30.0    # Function of the speed controllers - PWM neutral has period of 1.5ms
     speedScaler = 10    # Max speed is 40%, min speed is 20% due to PWM config
 
@@ -66,6 +71,8 @@ class DC_Motor_Controller:
 
     rSpeed = 0          # State variable that will be adjusted towards setpoint defined by user input
     lSpeed = 0          # "
+
+    
 
     # Pass the GPIO numbers for motor connections A and B
     def __init__(self, pinR, pinL, mode):
@@ -117,21 +124,34 @@ class DC_Motor_Controller:
         else:
             self.rSpeed = rTemp
 
-        if self.rSpeed > 100: self.rSpeed = 100
-        if self.rSpeed < -100: self.rSpeed = -100
+        if self.rSpeed > 100: 
+            self.rSpeed = 100
+        if self.rSpeed < -100: 
+            self.rSpeed = -100
 
-        if self.lSpeed > 100: self.lSpeed = 100
-        if self.lSpeed < -100: self.lSpeed = -100
+        if self.lSpeed > 100: 
+            self.lSpeed = 100
+        if self.lSpeed < -100: 
+            self.lSpeed = -100
 
-        self.R_PWM.ChangeDutyCycle(self.idleSpeed+(self.rSpeed/self.speedScaler))
-        self.L_PWM.ChangeDutyCycle(self.idleSpeed+(self.lSpeed/self.speedScaler))
+        #send to arduino via i2c
+        bus.write_byte(address, self.idleSpeed + (self.rspeed/self.speedScaler))
+        bus.write_byte(address, self.lSpeed + (self.lSpeed/self.speedScaler))
+        
 
-#class LED_Controller:
+        # self.R_PWM.ChangeDutyCycle(
+        #     self.idleSpeed+(self.rSpeed/self.speedScaler))
+        # self.L_PWM.ChangeDutyCycle(
+        #     self.idleSpeed+(self.lSpeed/self.speedScaler))
+
+
+# class LED_Controller:
 #    """Utilizes the Adafruit Neopixel library to control the output of the Neopixel LED ring."""
 #
 #    def __init__(self, arg):
 #        super(LED_Controller, self).__init__()
 #        self.arg = arg
+
 
 class Remote_Control:
     """Use a DualShock4 controller to manually control the operation of the robot"""
