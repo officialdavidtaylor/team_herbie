@@ -124,9 +124,9 @@ class DC_Motor_Controller:
         else:
             self.rSpeed = rTemp
 
-        if self.rSpeed > 100: 
+        if self.rSpeed > 100:
             self.rSpeed = 100
-        if self.rSpeed < -100: 
+        if self.rSpeed < -100:
             self.rSpeed = -100
 
         if self.lSpeed > 100: 
@@ -135,7 +135,7 @@ class DC_Motor_Controller:
             self.lSpeed = -100
 
         #send to arduino via i2c
-        self.bus.write_byte(self.address, self.idleSpeed + (self.rspeed/self.speedScaler))
+        self.bus.write_byte(self.address, self.idleSpeed + (self.rSpeed/self.speedScaler))
         self.bus.write_byte(self.address, self.lSpeed + (self.lSpeed/self.speedScaler))
         
 
