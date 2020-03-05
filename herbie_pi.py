@@ -138,12 +138,12 @@ class DC_Motor_Controller:
         #send to arduino via i2c
 
         rMotorValue = self.idleSpeed + (self.rSpeed/self.speedScaler)
-        print("rightMotorValue = " + str(rMotorValue))
+        #print("rightMotorValue = " + str(rMotorValue))
         lMotorValue = self.lSpeed + (self.lSpeed/self.speedScaler)
-        print("leftMotorValue = " + str(lMotorValue))
+        #print("leftMotorValue = " + str(lMotorValue))
         package = struct.pack('ff', rMotorValue, lMotorValue)
-        print(self.address)
-        print(list(package))
+        #print(self.address)
+        #print(list(package))
         try: self.bus.write_block_data(self.address, 1, list(package))
         except OSError as err:
             print("not today satan (OSError)")
