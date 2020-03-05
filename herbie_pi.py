@@ -142,8 +142,10 @@ class DC_Motor_Controller:
         lMotorValue = self.lSpeed + (self.lSpeed/self.speedScaler)
         print("leftMotorValue = " + str(lMotorValue))
         package = struct.pack('ff', rMotorValue, lMotorValue)
+        print(self.address)
+        print(list(package))
         self.bus.write_block_data(self.address, 1, list(package))
-        sleep(.05)
+        # sleep(.05)
 
         # self.R_PWM.ChangeDutyCycle(
         #     self.idleSpeed+(self.rSpeed/self.speedScaler))
