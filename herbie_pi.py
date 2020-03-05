@@ -138,10 +138,12 @@ class DC_Motor_Controller:
         #send to arduino via i2c
 
         rMotorValue = self.idleSpeed + (self.rSpeed/self.speedScaler)
+        print("rightMotorValue = " + str(rMotorValue))
         lMotorValue = self.lSpeed + (self.lSpeed/self.speedScaler)
+        print("leftMotorValue = " + str(lMotorValue))
         package = struct.pack('ff', rMotorValue, lMotorValue)
         self.bus.write_block_data(self.address, 1, list(package))
-        sleep(.01)
+        sleep(.05)
 
         # self.R_PWM.ChangeDutyCycle(
         #     self.idleSpeed+(self.rSpeed/self.speedScaler))
