@@ -144,7 +144,8 @@ class DC_Motor_Controller:
         package = struct.pack('ff', rMotorValue, lMotorValue)
         print(self.address)
         print(list(package))
-        self.bus.write_block_data(self.address, 1, list(package))
+        try: self.bus.write_block_data(self.address, 1, list(package))
+        except e: print(e)
         # sleep(.05)
 
         # self.R_PWM.ChangeDutyCycle(
