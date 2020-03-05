@@ -145,7 +145,8 @@ class DC_Motor_Controller:
         print(self.address)
         print(list(package))
         try: self.bus.write_block_data(self.address, 1, list(package))
-        except e: print(e)
+        except OSError as err:
+            print("not today satan (OSError)")
         # sleep(.05)
 
         # self.R_PWM.ChangeDutyCycle(
