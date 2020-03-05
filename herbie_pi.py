@@ -33,7 +33,7 @@
 import RPi.GPIO as GPIO  # The GPIO library for the Raspberry Pi
 
 from time import sleep
-import smbus 
+import smbus
 import struct
 
 # Used for PlayStation DualShock4 interfacing
@@ -73,7 +73,7 @@ class DC_Motor_Controller:
     rSpeed = 0          # State variable that will be adjusted towards setpoint defined by user input
     lSpeed = 0          # "
 
-    
+
 
     # Pass the GPIO numbers for motor connections A and B
     def __init__(self, pinR, pinL, mode):
@@ -130,19 +130,19 @@ class DC_Motor_Controller:
         if self.rSpeed < -100:
             self.rSpeed = -100
 
-        if self.lSpeed > 100: 
+        if self.lSpeed > 100:
             self.lSpeed = 100
-        if self.lSpeed < -100: 
+        if self.lSpeed < -100:
             self.lSpeed = -100
 
         #send to arduino via i2c
-        
+
         rMotorValue = self.idleSpeed + (self.rSpeed/self.speedScaler)
         lMotorValue = self.lSpeed + (self.lSpeed/self.speedScaler)
         package = struct.pack('ff', rMotorValue, lMotorValue)
         self.bus.write_block_data(self.address, 1, list(package))
-        sleep(.1)
-        
+        sleep(.01)
+
         # self.R_PWM.ChangeDutyCycle(
         #     self.idleSpeed+(self.rSpeed/self.speedScaler))
         # self.L_PWM.ChangeDutyCycle(
