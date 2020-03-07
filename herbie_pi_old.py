@@ -75,8 +75,8 @@ class DC_Motor_Controller:
         GPIO.setup(int(pinR), GPIO.OUT)    # Change output mode of pinR
         GPIO.setup(int(pinL), GPIO.OUT)    # Change output mode of PinL
 
-        self.R_PWM = GPIO.PWM(pinR, 200)    # Original setpoint was 200Hz: dhruv's gut told us we needed 192Hz i guess
-        self.L_PWM = GPIO.PWM(pinL, 200)    # "
+        self.R_PWM = GPIO.PWM(pinR, 210)    # Original setpoint was 200Hz: dhruv's gut told us we needed 192Hz i guess
+        self.L_PWM = GPIO.PWM(pinL, 210)    # "
 
         self.R_PWM.start(self.idleSpeed)    # Activate PWM for pin R
         self.L_PWM.start(self.idleSpeed)    # Activate PWM for pin L
@@ -98,19 +98,19 @@ class DC_Motor_Controller:
         lTemp = leftStick - (self.maxDeltaX * (rightStick)) # "
 
         # Limit rate of change for forward/backward motion
-        if ((lTemp - self.lSpeed) > self.maxDeltaY):
-            self.lSpeed += self.maxDeltaY
-        elif ((lTemp - self.lSpeed) < - self.maxDeltaY):
-            self.lSpeed -= self.maxDeltaY
-        else:
-            self.lSpeed = lTemp
-
-        if ((rTemp - self.rSpeed) > self.maxDeltaY):
-            self.rSpeed += self.maxDeltaY
-        elif ((rTemp - self.rSpeed) < - self.maxDeltaY):
-            self.rSpeed -= self.maxDeltaY
-        else:
-            self.rSpeed = rTemp
+        # if ((lTemp - self.lSpeed) > self.maxDeltaY):
+        #     self.lSpeed += self.maxDeltaY
+        # elif ((lTemp - self.lSpeed) < - self.maxDeltaY):
+        #     self.lSpeed -= self.maxDeltaY
+        # else:
+        #     self.lSpeed = lTemp
+        #
+        # if ((rTemp - self.rSpeed) > self.maxDeltaY):
+        #     self.rSpeed += self.maxDeltaY
+        # elif ((rTemp - self.rSpeed) < - self.maxDeltaY):
+        #     self.rSpeed -= self.maxDeltaY
+        # else:
+        #     self.rSpeed = rTemp
 
         if self.rSpeed > 100: self.rSpeed = 100
         if self.rSpeed < -100: self.rSpeed = -100
