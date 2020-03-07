@@ -75,8 +75,8 @@ class DC_Motor_Controller:
         GPIO.setup(int(pinR), GPIO.OUT)    # Change output mode of pinR
         GPIO.setup(int(pinL), GPIO.OUT)    # Change output mode of PinL
 
-        self.R_PWM = GPIO.PWM(pinR, 210)    # Original setpoint was 200Hz: dhruv's gut told us we needed 192Hz i guess
-        self.L_PWM = GPIO.PWM(pinL, 210)    # "
+        self.R_PWM = GPIO.PWM(pinR, 200)    # Original setpoint was 200Hz: dhruv's gut told us we needed 192Hz i guess
+        self.L_PWM = GPIO.PWM(pinL, 200)    # "
 
         self.R_PWM.start(self.idleSpeed)    # Activate PWM for pin R
         self.L_PWM.start(self.idleSpeed)    # Activate PWM for pin L
@@ -92,11 +92,6 @@ class DC_Motor_Controller:
     # Output of changeSpeed depends on the current drive mode.
     def changeSpeed(self, rightStick, leftStick):
         """Input values of rightStick and leftStick between -100 and 100"""
-        # Check to see if values have changed, abort if not
-        if (rightStick == self.rSpeed) and (leftStick == self.lSpeed):
-            return False
-
-        # <--Experimental mixing algorithm-->
 
         # Implement basic mixing algorithm
         rTemp = leftStick + (self.maxDeltaX * (rightStick)) # be careful not to divide by zero
