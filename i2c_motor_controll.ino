@@ -9,7 +9,6 @@
 
 // This example code is in the public domain.
 
-
 #include <Wire.h>
 
 byte data[3];
@@ -23,7 +22,7 @@ int MotorL = 11;
 //  motorValue[0] = data[0];
 //  motorValue[1] = data[1];
 //  motorValue[2] = data[2];
-//  
+//
 //  Serial.print(motorValue[1]);
 //  Serial.print(",");
 //  Serial.println(motorValue[2]);
@@ -73,7 +72,7 @@ void receiveEvent(int howMany)
       }
       prevCommand = command;
     }
-  
+
 //  while(1 < Wire.available()) // loop through all but the last
 //  {
 //    int valueR = Wire.read(); // receive byte as a character
