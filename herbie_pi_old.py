@@ -98,8 +98,8 @@ class DC_Motor_Controller:
         lTemp = leftStick - (self.maxDeltaX * (rightStick)) # "
 
         #TODO - remove these eventually
-        self.rSpeed = rTemp
-        self.lSpeed = -lTemp
+        self.rSpeed = -rTemp
+        self.lSpeed = lTemp
 
         # Limit rate of change for forward/backward motion
         # if ((lTemp - self.lSpeed) > self.maxDeltaY):
