@@ -94,8 +94,8 @@ class DC_Motor_Controller:
         """Input values of rightStick and leftStick between -100 and 100"""
 
         # Implement basic mixing algorithm
-        rTemp = leftStick + (self.maxDeltaX * (rightStick)) # be careful not to divide by zero
-        lTemp = leftStick - (self.maxDeltaX * (rightStick)) # "
+        rSpeed = leftStick + (self.maxDeltaX * (rightStick)) # be careful not to divide by zero
+        lSpeed = leftStick - (self.maxDeltaX * (rightStick)) # "
 
         # Limit rate of change for forward/backward motion
         # if ((lTemp - self.lSpeed) > self.maxDeltaY):
