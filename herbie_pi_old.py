@@ -99,7 +99,7 @@ class DC_Motor_Controller:
 
         #TODO - remove these eventually
         self.rSpeed = -rTemp
-        self.lSpeed = lTemp * 0.9
+        self.lSpeed = lTemp * 0.8
 
         # Limit rate of change for forward/backward motion
         # if ((lTemp - self.lSpeed) > self.maxDeltaY):
