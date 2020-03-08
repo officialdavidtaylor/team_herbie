@@ -99,7 +99,7 @@ class DC_Motor_Controller:
 
         #TODO - remove these eventually
         self.rSpeed = -rTemp
-        self.lSpeed = lTemp
+        self.lSpeed = lTemp * 0.9
 
         # Limit rate of change for forward/backward motion
         # if ((lTemp - self.lSpeed) > self.maxDeltaY):
@@ -123,7 +123,7 @@ class DC_Motor_Controller:
         if self.lSpeed < -100: self.lSpeed = -100
 
         self.R_PWM.ChangeDutyCycle(self.idleSpeed+(self.rSpeed/self.speedScaler))
-        self.L_PWM.ChangeDutyCycle((self.idleSpeed+(self.lSpeed/self.speedScaler))*0.9)
+        self.L_PWM.ChangeDutyCycle(self.idleSpeed+(self.lSpeed/self.speedScaler))
 
 #class LED_Controller:
 #    """Utilizes the Adafruit Neopixel library to control the output of the Neopixel LED ring."""
